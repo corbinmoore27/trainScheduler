@@ -32,7 +32,7 @@ $("#add-train-btn").on("click", function(event){
 
     $("#train-name-input").val("");
     $("#destination-input").val("");
-    $("#frist-train-input").val("");
+    $("#first-train-input").val("");
     $("#frequency-input").val("");
 
 });
@@ -52,12 +52,14 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
     
     
-    // var startTrn = moment(trnTime, "hh:mm").subtract(1,"years");
-    // var crntTime = moment();
-    // var tmDiff = crntTime.diff(startTrn, "minutes") % trnFreq
-    // var minAwy  = trnFreq - tmDiff;
-    // var nxtArrv = moment().add(tillTrn, "minutes")
-    // var fmtTm = moment(nxtArrv).format("HH:mm")
-    $("#train-table > tbody").append("<tr><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnFreq + "</td><td>" + "fmtTm" + "</td><td>" + "minAwy" + "</td></tr>");
+    var startTrn = moment(trnTime, "hh:mm").subtract(1,"years");
+    var crntTime = moment();
+    var tmDiff = crntTime.diff(startTrn, "minutes");
+    var keith = tmDiff % trnFreq;
+    var minAwy  = trnFreq - keith;
+    var nxtArrv = moment().add(minAwy, "minutes");
+    var fmtTm = moment(nxtArrv).format("HH:mm");
+
+    $("#train-table > tbody").append("<tr><td>" + trnName + "</td><td>" + trnDest + "</td><td>" + trnFreq + "</td><td>" + fmtTm + "</td><td>" + minAwy + "</td></tr>");
 
 });
